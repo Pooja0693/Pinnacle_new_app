@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/i1"
+            android:onClick="doubt"
+            android:title="Ask your doubts">
+        </item>
+
+        <item
+            android:id="@+id/i2"
+            android:onClick="doubt"
+            android:title="change App Language">
+        </item>
+
+        <item
+            android:id="@+id/i3"
+            android:onClick="doubt"
+            android:title="Contribute">
+        </item>
+
+        <item android:title="communicate">
+
+            <menu>
+                <item
+                    android:id="@+id/i11"
+                    android:onClick="doubt"
+                    android:title="Share">
+                </item>
+                <item
+                    android:id="@+id/i12"
+                    android:onClick="doubt"
+                    android:title="Signout">
+                </item>
+
+
+            </menu>
+        </item>
+    </group>
+
+</menu>
