@@ -8,25 +8,22 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 
 
-
-public class Frag_cardview_showsubjects extends Fragment {
-
-
-    MainListener listenerobject;
-    public interface MainListener{
-        public void subjectSelected(int position);
-    }
+public class SelectSubjectsFragment extends Fragment {
 
 
+    SubjectSelectListener listenerobject;
+
+         public interface SubjectSelectListener {
+         public void subjectSelected(int position);
+         }
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_frag_cardview_showsubjects, container, false);
+       @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.subjectselectedfragment, container, false);
+
         CardView b1 = (CardView) view.findViewById(R.id.cardview1);
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,24 +59,17 @@ public class Frag_cardview_showsubjects extends Fragment {
 
         return view;
 
-    }
-    @Override
-    public void onAttach(Activity activity) {
+     }
+        @Override
+        public void onAttach(Activity activity) {
         super.onAttach(activity);
 
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            listenerobject = (MainListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement onHeadingListener");
+            listenerobject = (SubjectSelectListener) activity;
+        } catch (ClassCastException e) {};
         }
     }
 
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        // Notify the parent activity of selected item
-        listenerobject.subjectSelected(position);
 
-    }
-}

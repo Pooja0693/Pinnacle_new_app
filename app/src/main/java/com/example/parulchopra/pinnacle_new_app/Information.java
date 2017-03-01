@@ -8,14 +8,10 @@ import java.util.ArrayList;
 
 public class Information {
 
-ArrayList<Pdf_model> English, Maths, Gk,Reasoning;
-    public String getData(int position){
-        switch (position)
-        {
-            case 0:
+        private static ArrayList<Pdf_model> English, Maths, Gk,Reasoning;
 
-        }
-    }
+
+
 
         }
 

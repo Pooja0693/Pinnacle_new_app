@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -19,62 +18,63 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-public class OnsubjectClick extends AppCompatActivity {
+public class OnSunjectSelectedActivity extends AppCompatActivity implements Video_frag.OnSubjectClicklistener,Test_frag.OnSubjectTestClicklistener{
 
     ViewPager v11;
     TabLayout t11;
-    int GETPOSITION;
+    int position;
+    Window window;
+    private Toolbar toolbar;
 
-private Toolbar toolbar;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_onsubject_click);
-
-
-        GETPOSITION = getIntent().getIntExtra("PASSPOSITION",-1);
-
+        position = getIntent().getIntExtra("PASSPOSITION",-1);
 
         toolbar=(Toolbar)findViewById(R.id.T1op);
         setSupportActionBar(toolbar);
+
         if (getSupportActionBar() != null)
         {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
-        Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(Color.BLACK);
+
         v11=(ViewPager) findViewById(R.id.v1);
         v11.setAdapter(new CustomAdapter(getSupportFragmentManager(),getApplicationContext()));
         t11=(TabLayout) findViewById(R.id.t1);
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.BLACK);
 
-        switch(GETPOSITION){
+
+        switch(position){
 
             case 0:
                 t11.setBackgroundColor(getResources().getColor(R.color.holo_purple));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.holo_purple));
 
-                Toast.makeText(getApplicationContext(),"helohdvh",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Case 0 clicked",Toast.LENGTH_LONG).show();
                 break;
             case 1:
                 t11.setBackgroundColor(getResources().getColor(R.color.holo_blue));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.holo_blue));
 
-                Toast.makeText(getApplicationContext(),"gdyfuihdsjfhujd",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Case 1 clicked",Toast.LENGTH_LONG).show();
                 break;
             case 2:
                 t11.setBackgroundColor(getResources().getColor(R.color.holo_red));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.holo_red));
 
-                Toast.makeText(getApplicationContext(),"gdgfdhguyfdhg8uioje4ri",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Case 2 clicked",Toast.LENGTH_LONG).show();
                 break;
             case 3:
                 t11.setBackgroundColor(getResources().getColor(R.color.holo_green));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.holo_green));
 
-                Toast.makeText(getApplicationContext(),"hgdiufyufjdh",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Case 3 clicked",Toast.LENGTH_LONG).show();
                 break;
         }
 
@@ -97,6 +97,35 @@ private Toolbar toolbar;
         });
     }
 
+         @Override
+          public void videoSelected(int position, String url) {
+          Intent i = new Intent(this,DisplayActivity.class);
+
+            // i.putExtra("url",url);
+            i.putExtra("position",position);
+            startActivity(i);
+
+             }
+
+
+    public void pdfSelected(int position, String url) {
+        Intent i = new Intent(this,DisplayActivity.class);
+
+        // i.putExtra("url",url);
+        i.putExtra("position",position);
+        startActivity(i);
+    }
+
+    @Override
+    public void testSelected(int position, String url) {
+
+        Intent i = new Intent(this,DisplayActivity.class);
+
+        // i.putExtra("url",url);
+        i.putExtra("position",position);
+        startActivity(i);
+    }
+
 
     private class CustomAdapter extends FragmentPagerAdapter {
         String[] a={"PDF","VIDEOS","PRACTICE TEST"};
@@ -104,21 +133,21 @@ private Toolbar toolbar;
             super(supportFragmentManager);
         }
 
-        @Override
-        public Fragment getItem(int position) {
+         @Override
+          public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return new Pdf_frag().newInstance(GETPOSITION);
+                    return new Pdf_frag().newInstance(OnSunjectSelectedActivity.this.position);
                 case 1:
-                    return new Video_fragment().newInstance(GETPOSITION);
+                    return new Video_frag().newInstance(OnSunjectSelectedActivity.this.position);
                 case 2:
-                    return new Test_frag().newInstance(GETPOSITION);
+                    return new Test_frag().newInstance(OnSunjectSelectedActivity.this.position);
                 default:
                     return null;
             }
         }
 
-        @Override
+         @Override
         public int getCount() {
             return a.length;
         }
@@ -129,7 +158,8 @@ private Toolbar toolbar;
         }
 
 
-    }
+         }
+
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -137,6 +167,8 @@ private Toolbar toolbar;
         {
             finish();
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }

@@ -6,6 +6,6 @@ import android.view.View;
  * Created by Ideal on 2/14/2017.
  */
 
-interface ONCLICKLISTENER {
-    public void parul(View v, int pos);
+public interface CustomListener {
+    public void onClickMethod(View v, int pos);
 }

@@ -1,6 +1,7 @@
 package com.example.parulchopra.pinnacle_new_app;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,13 @@ public class Test_frag extends Fragment {
     private RecyclerView r;
     private RecyclerView.Adapter a;
     private RecyclerView.LayoutManager l;
+
+    OnSubjectTestClicklistener onSubjectTestClicklistener;
+
+    public interface OnSubjectTestClicklistener{
+        public void testSelected(int position,String url);
+    }
+
 
     public  Test_frag newInstance( int position) {
         Test_frag f = new Test_frag();
@@ -40,6 +48,27 @@ public class Test_frag extends Fragment {
 
         Test_model pdf1= new Test_model("1","rumani","parul","pooja");
         test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+        test_models.add(pdf1);
+
+
         r=(RecyclerView)v.findViewById(R.id.testrecyler);
         r.addItemDecoration(new SimpleDividerItemDecoration(getContext()));
         a= new TestRecyclerAdapter(getContext(),test_models);
@@ -51,6 +80,19 @@ public class Test_frag extends Fragment {
 
     return v;
 }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            onSubjectTestClicklistener = (Test_frag.OnSubjectTestClicklistener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement onHeadingListener");
+        }
+    }
 
     private class TestRecyclerAdapter extends RecyclerView.Adapter<TestRecyclerAdapter.Recyclerviewholder> {
         Context context;
@@ -66,7 +108,7 @@ public class Test_frag extends Fragment {
 
         @Override
         public TestRecyclerAdapter.Recyclerviewholder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view =inflater.inflate(R.layout.testlistview,parent,false);
+            View view =inflater.inflate(R.layout.test_list_item,parent,false);
             Recyclerviewholder M1= new Recyclerviewholder(view);
 
             return M1;
@@ -78,10 +120,11 @@ public class Test_frag extends Fragment {
             holder.T2.setText(test_models.get(position).getName2());
             holder.T3.setText(test_models.get(position).getName3());
             holder.T4.setText(test_models.get(position).getName4());
-            holder.SETONCLICKLISTENER(new ONCLICKLISTENER() {
+            holder.SETONCLICKLISTENER(new CustomListener() {
                 @Override
-                public void parul(View v, int pos) {
+                public void onClickMethod(View v, int pos) {
                     Snackbar.make(v,"pleaseeeeeeeeeeeeeeeeeeeeeee" , Snackbar.LENGTH_LONG).setAction("action",null).show();
+                    onSubjectTestClicklistener.testSelected(2,"url");
                 }
             });
         }
@@ -94,7 +137,7 @@ public class Test_frag extends Fragment {
 
         public class Recyclerviewholder extends RecyclerView.ViewHolder implements View.OnClickListener {
             TextView T1,T2,T3,T4;
-ONCLICKLISTENER onclicklistener;
+CustomListener onclicklistener;
             public Recyclerviewholder(View itemView) {
                 super(itemView);
                 T1 = (TextView) itemView.findViewById(R.id.name1);
@@ -107,9 +150,9 @@ ONCLICKLISTENER onclicklistener;
 
             @Override
             public void onClick(View v) {
-                this.onclicklistener.parul(v, getLayoutPosition());
+                this.onclicklistener.onClickMethod(v, getLayoutPosition());
             }
-            public void SETONCLICKLISTENER(ONCLICKLISTENER io) {
+            public void SETONCLICKLISTENER(CustomListener io) {
                 this.onclicklistener = io;
             }
         }     }

@@ -1,6 +1,7 @@
 package com.example.parulchopra.pinnacle_new_app;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -16,15 +17,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-public class Video_fragment extends Fragment {
+public class Video_frag extends Fragment {
 
     private RecyclerView r;
     private RecyclerView.Adapter a;
     private RecyclerView.LayoutManager l;
 
+    OnSubjectClicklistener onSubjectClicklistener;
 
-    public Video_fragment newInstance(int position) {
-        Video_fragment f = new Video_fragment();
+    public interface OnSubjectClicklistener{
+        public void videoSelected(int position,String url);
+    }
+
+    public Video_frag newInstance(int position) {
+        Video_frag f = new Video_frag();
 
         Bundle args = new Bundle();
         args.putInt("index",position);
@@ -35,11 +41,11 @@ public class Video_fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v=inflater.inflate(R.layout.fragment_video_fragment, container, false);
+        View v=inflater.inflate(R.layout.fragment_video_frag, container, false);
         ArrayList<Video_model> video_models = new ArrayList<Video_model>();
 
         Video_model video1= new Video_model("1","rumani","parul",R.drawable.b1);
-         video_models.add(video1);
+        video_models.add(video1);
         video_models.add(video1);
         video_models.add(video1);
         video_models.add(video1);
@@ -69,6 +75,20 @@ public class Video_fragment extends Fragment {
         return v;
 
     }
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            onSubjectClicklistener = (Video_frag.OnSubjectClicklistener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement onHeadingListener");
+        }
+    }
+
 
     private class VideoRecyclerAdapter extends RecyclerView.Adapter<VideoRecyclerAdapter.Recyclerviewholder> {
         Context context;
@@ -84,25 +104,33 @@ public class Video_fragment extends Fragment {
 
         @Override
         public Recyclerviewholder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view =inflater.inflate(R.layout.videolistview,parent,false);
+            View view =inflater.inflate(R.layout.video_list_item,parent,false);
             Recyclerviewholder M1= new Recyclerviewholder(view);
 
             return M1;
         }
 
         @Override
-        public void onBindViewHolder(Recyclerviewholder holder, int position) {
+        public void onBindViewHolder(Recyclerviewholder holder, final int position) {
             holder.T1.setText(video_models.get(position).getName1());
             holder.T2.setText(video_models.get(position).getName2());
             holder.T3.setText(video_models.get(position).getName3());
             holder.I1.setImageResource(video_models.get(position).getImage());
-            holder.SETONCLICKLISTENER(new ONCLICKLISTENER() {
+
+
+
+
+            holder.SETONCLICKLISTENER(new CustomListener() {
                 @Override
-                public void parul(View v, int pos) {
+                public void onClickMethod(View v, int pos) {
                     Snackbar.make(v,"byeeeeeeeeeeeeeeeee" , Snackbar.LENGTH_LONG).setAction("action",null).show();
+                    onSubjectClicklistener.videoSelected(1,"url");
+
                 }
             });
         }
+
+
 
         @Override
         public int getItemCount() {
@@ -112,11 +140,11 @@ public class Video_fragment extends Fragment {
         public class Recyclerviewholder extends RecyclerView.ViewHolder  implements View.OnClickListener  {
             TextView T1,T2,T3;
             ImageView I1;
-            ONCLICKLISTENER onclicklistener;
+            CustomListener onclicklistener;
             public Recyclerviewholder(View itemView) {
                 super(itemView);
                 T1=(TextView)itemView.findViewById(R.id.name1);
-                T1.setBackgroundResource(R.drawable.circletextshapegreen);
+                T1.setBackgroundResource(R.drawable.circletextshape);
                 T2=(TextView)itemView.findViewById(R.id.name2);
                 T3=(TextView)itemView.findViewById(R.id.name3);
                 I1=(ImageView)itemView.findViewById(R.id.Image1);
@@ -125,9 +153,9 @@ public class Video_fragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                this.onclicklistener.parul(v, getLayoutPosition());
+                this.onclicklistener.onClickMethod(v, getLayoutPosition());
             }
-            public void SETONCLICKLISTENER(ONCLICKLISTENER io) {
+            public void SETONCLICKLISTENER(CustomListener io) {
                 this.onclicklistener = io;
             }
         }

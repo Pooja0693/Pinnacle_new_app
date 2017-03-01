@@ -3,19 +3,19 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/i1"
-            android:onClick="doubt"
+            android:onClick="menuOnClick"
             android:title="Ask your doubts">
         </item>
 
         <item
             android:id="@+id/i2"
-            android:onClick="doubt"
+            android:onClick="menuOnClick"
             android:title="change App Language">
         </item>
 
         <item
             android:id="@+id/i3"
-            android:onClick="doubt"
+            android:onClick="menuOnClick"
             android:title="Contribute">
         </item>
 
@@ -24,12 +24,12 @@
             <menu>
                 <item
                     android:id="@+id/i11"
-                    android:onClick="doubt"
+                    android:onClick="menuOnClick"
                     android:title="Share">
                 </item>
                 <item
                     android:id="@+id/i12"
-                    android:onClick="doubt"
+                    android:onClick="menuOnClick"
                     android:title="Signout">
                 </item>
 

@@ -3,9 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
-    <color name="holo_purple">#746abf</color>
-    <color name="holo_blue">#399bfd</color>
-    <color name="holo_red">#f15b64</color>
-    <color name="holo_green">#5bce3f</color>
+    <color name="holo_purple">#FF746ABF</color>
+    <color name="holo_blue">#73b9ff</color>
+    <color name="holo_red">#FFEA6E76</color>
+    <color name="holo_green">#FF6FCB58</color>
 
 </resources>
